@@ -20,12 +20,13 @@ const ExportData: React.FC = () => {
     if (students.length === 0) return;
 
     // 1. Define Headers
-    const headers = ['Student Name', 'Standard', 'WhatsApp Number', 'Total Fees', 'Paid Fees', 'Due Amount'];
+    const headers = ['Student Name', 'Standard', 'Medium', 'WhatsApp Number', 'Total Fees', 'Paid Fees', 'Due Amount'];
 
     // 2. Format Data Rows
     const rows = students.map(s => [
       `"${s.name}"`, // Quote strings to handle commas in names
       s.standard,
+      s.medium || 'Marathi Medium', // Default to Marathi if not present in old data
       s.whatsappNumber || '-',
       s.totalFees,
       s.paidFees,

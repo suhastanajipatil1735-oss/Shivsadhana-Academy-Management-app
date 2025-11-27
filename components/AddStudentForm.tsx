@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Save, UserPlus, CheckCircle, Smartphone } from 'lucide-react';
+import { Save, UserPlus, CheckCircle, Smartphone, BookOpen } from 'lucide-react';
 import { db } from '../services/db';
-import { CLASS_OPTIONS, ClassOption } from '../types';
+import { CLASS_OPTIONS, ClassOption, MEDIUM_OPTIONS, MediumOption } from '../types';
 
 interface Props {
   onSuccess: () => void;
@@ -10,6 +10,7 @@ interface Props {
 const AddStudentForm: React.FC<Props> = ({ onSuccess }) => {
   const [name, setName] = useState('');
   const [standard, setStandard] = useState<ClassOption>('10th');
+  const [medium, setMedium] = useState<MediumOption>('Marathi Medium');
   const [whatsappNumber, setWhatsappNumber] = useState('');
   const [totalFees, setTotalFees] = useState<string>('');
   const [paidFees, setPaidFees] = useState<string>('');
@@ -22,6 +23,7 @@ const AddStudentForm: React.FC<Props> = ({ onSuccess }) => {
     db.addStudent({
       name,
       standard,
+      medium,
       whatsappNumber,
       totalFees: Number(totalFees),
       paidFees: Number(paidFees) || 0,
@@ -32,6 +34,7 @@ const AddStudentForm: React.FC<Props> = ({ onSuccess }) => {
     setWhatsappNumber('');
     setTotalFees('');
     setPaidFees('');
+    // Keep standard and medium as is for faster data entry of same batch
     setTimeout(() => {
       setShowSuccess(false);
       onSuccess();
@@ -46,7 +49,7 @@ const AddStudentForm: React.FC<Props> = ({ onSuccess }) => {
         </div>
         <div>
           <h2 className="text-xl font-bold text-gray-800">Register New Student</h2>
-          <p className="text-gray-500 text-sm">Add student details and fee structure</p>
+          <p className="text-gray-500 text-sm">Add student details, medium, and fee structure</p>
         </div>
       </div>
 
@@ -78,19 +81,37 @@ const AddStudentForm: React.FC<Props> = ({ onSuccess }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Medium</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Smartphone size={18} className="text-gray-400" />
+                <BookOpen size={18} className="text-gray-400" />
               </div>
-              <input
-                type="tel"
-                value={whatsappNumber}
-                onChange={(e) => setWhatsappNumber(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                placeholder="e.g. 9876543210"
-              />
+              <select
+                value={medium}
+                onChange={(e) => setMedium(e.target.value as MediumOption)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+              >
+                {MEDIUM_OPTIONS.map(opt => (
+                  <option key={opt} value={opt}>{opt}</option>
+                ))}
+              </select>
             </div>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number</label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Smartphone size={18} className="text-gray-400" />
+            </div>
+            <input
+              type="tel"
+              value={whatsappNumber}
+              onChange={(e) => setWhatsappNumber(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              placeholder="e.g. 9876543210"
+            />
           </div>
         </div>
 

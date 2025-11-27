@@ -61,7 +61,7 @@ const StudentList: React.FC<Props> = ({ onUpdate }) => {
             <thead>
               <tr className="bg-gray-50 border-b border-gray-200">
                 <th className="p-4 font-semibold text-gray-600 text-sm">Name</th>
-                <th className="p-4 font-semibold text-gray-600 text-sm">Class</th>
+                <th className="p-4 font-semibold text-gray-600 text-sm">Class & Medium</th>
                 <th className="p-4 font-semibold text-gray-600 text-sm">Contact</th>
                 <th className="p-4 font-semibold text-gray-600 text-sm">Total Fees</th>
                 <th className="p-4 font-semibold text-gray-600 text-sm">Paid</th>
@@ -85,9 +85,16 @@ const StudentList: React.FC<Props> = ({ onUpdate }) => {
                     <tr key={student.id} className="hover:bg-gray-50 transition-colors">
                       <td className="p-4 font-medium text-gray-800">{student.name}</td>
                       <td className="p-4 text-gray-600">
-                        <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-semibold border border-blue-100">
-                          {student.standard}
-                        </span>
+                        <div className="flex flex-col items-start space-y-1">
+                          <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded text-xs font-semibold border border-blue-100">
+                            {student.standard}
+                          </span>
+                          {student.medium && (
+                            <span className="text-xs text-gray-500">
+                              {student.medium}
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="p-4 text-gray-600 text-sm">
                         {student.whatsappNumber ? (
