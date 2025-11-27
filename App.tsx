@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  LayoutDashboard, UserPlus, Users, MessageCircle, Trash2, LogOut, Menu, X 
+  LayoutDashboard, UserPlus, Users, MessageCircle, Trash2, LogOut, Menu, X, FileSpreadsheet
 } from 'lucide-react';
 
 import SplashScreen from './components/SplashScreen';
@@ -10,9 +10,10 @@ import AddStudentForm from './components/AddStudentForm';
 import StudentList from './components/StudentList';
 import FeeReminders from './components/FeeReminders';
 import RemoveStudents from './components/RemoveStudents';
+import ExportData from './components/ExportData';
 import { db } from './services/db';
 
-type Screen = 'dashboard' | 'add' | 'list' | 'reminders' | 'remove';
+type Screen = 'dashboard' | 'add' | 'list' | 'reminders' | 'remove' | 'export';
 
 const App: React.FC = () => {
   const [appState, setAppState] = useState<'splash' | 'auth' | 'app'>('splash');
@@ -81,6 +82,7 @@ const App: React.FC = () => {
             <NavItem screen="reminders" icon={MessageCircle} label="Fee Reminders" />
             <div className="pt-4 mt-4 border-t border-gray-100">
               <NavItem screen="remove" icon={Trash2} label="Remove Class" />
+              <NavItem screen="export" icon={FileSpreadsheet} label="Export Data" />
             </div>
           </nav>
 
@@ -109,6 +111,7 @@ const App: React.FC = () => {
             {currentScreen === 'list' && 'Student Records'}
             {currentScreen === 'reminders' && 'WhatsApp Reminders'}
             {currentScreen === 'remove' && 'Batch Removal'}
+            {currentScreen === 'export' && 'Export Data'}
           </span>
           <div className="w-10" /> {/* Spacer for balance */}
         </header>
@@ -124,6 +127,7 @@ const App: React.FC = () => {
                 {currentScreen === 'list' && 'Student Records Directory'}
                 {currentScreen === 'reminders' && 'Fee Collection Reminders'}
                 {currentScreen === 'remove' && 'Bulk Student Removal'}
+                {currentScreen === 'export' && 'Export Data to Excel'}
               </h2>
               <p className="text-gray-500 text-sm mt-1">Manage your academy fees and students efficiently.</p>
             </div>
@@ -138,6 +142,7 @@ const App: React.FC = () => {
               {currentScreen === 'list' && <StudentList onUpdate={triggerRefresh} />}
               {currentScreen === 'reminders' && <FeeReminders />}
               {currentScreen === 'remove' && <RemoveStudents onUpdate={triggerRefresh} />}
+              {currentScreen === 'export' && <ExportData />}
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ export interface Student {
   totalFees: number;
   paidFees: number;
   whatsappNumber?: string;
+  lastReminderSent?: number; // Timestamp of last reminder
   createdAt: number;
 }
 
