@@ -4,6 +4,7 @@ export interface Student {
   standard: string; // "5th", "6th", etc.
   totalFees: number;
   paidFees: number;
+  whatsappNumber?: string;
   createdAt: number;
 }
 

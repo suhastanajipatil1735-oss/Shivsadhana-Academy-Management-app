@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Save, UserPlus, CheckCircle } from 'lucide-react';
+import { Save, UserPlus, CheckCircle, Smartphone } from 'lucide-react';
 import { db } from '../services/db';
 import { CLASS_OPTIONS, ClassOption } from '../types';
 
@@ -10,6 +10,7 @@ interface Props {
 const AddStudentForm: React.FC<Props> = ({ onSuccess }) => {
   const [name, setName] = useState('');
   const [standard, setStandard] = useState<ClassOption>('10th');
+  const [whatsappNumber, setWhatsappNumber] = useState('');
   const [totalFees, setTotalFees] = useState<string>('');
   const [paidFees, setPaidFees] = useState<string>('');
   const [showSuccess, setShowSuccess] = useState(false);
@@ -21,12 +22,14 @@ const AddStudentForm: React.FC<Props> = ({ onSuccess }) => {
     db.addStudent({
       name,
       standard,
+      whatsappNumber,
       totalFees: Number(totalFees),
       paidFees: Number(paidFees) || 0,
     });
 
     setShowSuccess(true);
     setName('');
+    setWhatsappNumber('');
     setTotalFees('');
     setPaidFees('');
     setTimeout(() => {
@@ -60,17 +63,35 @@ const AddStudentForm: React.FC<Props> = ({ onSuccess }) => {
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Class / Standard</label>
-          <select
-            value={standard}
-            onChange={(e) => setStandard(e.target.value as ClassOption)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
-          >
-            {CLASS_OPTIONS.map(opt => (
-              <option key={opt} value={opt}>{opt} Standard</option>
-            ))}
-          </select>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Class / Standard</label>
+            <select
+              value={standard}
+              onChange={(e) => setStandard(e.target.value as ClassOption)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+            >
+              {CLASS_OPTIONS.map(opt => (
+                <option key={opt} value={opt}>{opt} Standard</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Smartphone size={18} className="text-gray-400" />
+              </div>
+              <input
+                type="tel"
+                value={whatsappNumber}
+                onChange={(e) => setWhatsappNumber(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                placeholder="e.g. 9876543210"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

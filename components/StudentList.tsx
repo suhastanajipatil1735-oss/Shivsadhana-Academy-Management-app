@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Edit2, X, Check, Filter } from 'lucide-react';
+import { Search, Edit2, X, Check, Filter, Phone } from 'lucide-react';
 import { db } from '../services/db';
 import { Student } from '../types';
 
@@ -62,6 +62,7 @@ const StudentList: React.FC<Props> = ({ onUpdate }) => {
               <tr className="bg-gray-50 border-b border-gray-200">
                 <th className="p-4 font-semibold text-gray-600 text-sm">Name</th>
                 <th className="p-4 font-semibold text-gray-600 text-sm">Class</th>
+                <th className="p-4 font-semibold text-gray-600 text-sm">Contact</th>
                 <th className="p-4 font-semibold text-gray-600 text-sm">Total Fees</th>
                 <th className="p-4 font-semibold text-gray-600 text-sm">Paid</th>
                 <th className="p-4 font-semibold text-gray-600 text-sm">Due</th>
@@ -71,7 +72,7 @@ const StudentList: React.FC<Props> = ({ onUpdate }) => {
             <tbody className="divide-y divide-gray-100">
               {filteredStudents.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="p-8 text-center text-gray-500">
+                  <td colSpan={7} className="p-8 text-center text-gray-500">
                     No students found matching "{searchTerm}"
                   </td>
                 </tr>
@@ -87,6 +88,16 @@ const StudentList: React.FC<Props> = ({ onUpdate }) => {
                         <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-semibold border border-blue-100">
                           {student.standard}
                         </span>
+                      </td>
+                      <td className="p-4 text-gray-600 text-sm">
+                        {student.whatsappNumber ? (
+                          <div className="flex items-center text-green-600">
+                            <Phone size={14} className="mr-1" />
+                            {student.whatsappNumber}
+                          </div>
+                        ) : (
+                          <span className="text-gray-400">-</span>
+                        )}
                       </td>
                       <td className="p-4 text-gray-600">₹{student.totalFees}</td>
                       <td className="p-4 text-gray-600">

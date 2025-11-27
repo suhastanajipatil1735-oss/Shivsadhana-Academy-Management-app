@@ -1,24 +1,13 @@
 import { Student, CLASS_OPTIONS } from '../types';
 
-const STORAGE_KEY = 'shivsadhana_students_db_v1';
-
-// Seed data to show if empty
-const SEED_DATA: Student[] = [
-  { id: '1', name: 'Aarav Patil', standard: '10th', totalFees: 25000, paidFees: 15000, createdAt: Date.now() },
-  { id: '2', name: 'Vivaan Deshmukh', standard: '9th', totalFees: 22000, paidFees: 22000, createdAt: Date.now() },
-  { id: '3', name: 'Aditya Joshi', standard: '10th', totalFees: 25000, paidFees: 5000, createdAt: Date.now() },
-  { id: '4', name: 'Vihaan Sawant', standard: '8th', totalFees: 20000, paidFees: 10000, createdAt: Date.now() },
-  { id: '5', name: 'Arjun Kulkarni', standard: '5th', totalFees: 15000, paidFees: 0, createdAt: Date.now() },
-];
+const STORAGE_KEY = 'shivsadhana_students_db_v2';
 
 export const db = {
   getStudents: (): Student[] => {
     try {
       const data = localStorage.getItem(STORAGE_KEY);
       if (!data) {
-        // Initialize with seed data if empty for demo purposes
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_DATA));
-        return SEED_DATA;
+        return [];
       }
       return JSON.parse(data);
     } catch (e) {
